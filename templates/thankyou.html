@@ -1,0 +1,264 @@
+{% load static %}
+{% load math_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smile Cleaning Products - thank</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/newdesign.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ---------- Thank you heading ---------- */
+    .thank-you-heading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.8rem;
+      color: #2a7f4f;
+      margin-bottom: 10px;
+    }
+    .thank-you-heading i {
+      color: #2a7f4f;
+      font-size: 2rem;
+    }
+
+    /* ---------- Order Summary Box ---------- */
+    .order-summary {
+      margin-top: 20px;
+      max-width: 800px;
+      margin-left:auto;
+      margin-right:auto;
+      padding: 25px;
+      border-radius: 12px;
+      background: #fcfcf9; /* softer off-white */
+      border: 1px solid #e2e2e2;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transition: transform 0.2s;
+    }
+    .order-summary:hover {
+      transform: translateY(-2px);
+    }
+
+    .order-summary h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 1.5rem;
+    }
+
+    .order-summary p {
+      margin: 6px 0;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .order-summary p strong {
+      color: #333;
+    }
+
+    /* Table styles */
+    .order-summary table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .order-summary table th, .order-summary table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .order-summary table th {
+      background: #e6f2ea; /* soft green header */
+      text-align: left;
+      font-weight: 600;
+      color: #2a7f4f;
+    }
+    .order-summary table tr:hover {
+      background: #f9f9f9;
+    }
+
+    /* Thumbnail images */
+    .order-summary table td img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* Align numbers */
+    .order-summary table td.text-center {
+      text-align: center;
+    }
+    .order-summary table td.text-right {
+      text-align: right;
+    }
+
+    .order-summary tfoot td {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    /* Payment method badge */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: white;
+      background-color: #2a7f4f;
+      margin-left: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .order-summary table td img {
+        width: 40px;
+        height: 40px;
+      }
+      .order-summary {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body data-user="{% if request.user.is_authenticated %}{{ request.user.first_name }}{% endif %}">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'home' %}" style="display:flex;align-items:center;gap:10px;">
+        <img src="{% static 'images/smilelogo.JPG' %}" alt="logo" class="logo" />
+        <div class="logo-text">SMILE</div>
+      </a>
+      <div id="user-banner" class="user-banner-inline"></div>
+    </div>
+    <div class="hamburger" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav class="nav-right" id="navMenu">
+      <a class="nav-item" href="{% url 'home' %}"><i class="fas fa-home"></i><span>Home</span></a>
+      <a class="nav-item" href="{% url 'product-list' %}"><i class="fas fa-box-open"></i><span>Items</span></a>
+      <a class="nav-item" href="{% url 'aboutus' %}"><i class="fas fa-info-circle"></i><span>About</span></a>
+      <a class="nav-item" href="{% url 'contactus' %}"><i class="fas fa-envelope"></i><span>Contact</span></a>
+      <a class="nav-item" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+      <a id="nav-signin" class="nav-item" href="{% url 'signin' %}"><i class="fas fa-user-plus"></i><span>Sign In</span></a>
+      <a id="nav-login" class="nav-item" href="{% url 'login' %}"><i class="fas fa-lock"></i><span>Log In</span></a>
+    </nav>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'product-list' %}">Items</a>
+    <a href="{% url 'aboutus' %}">About</a>
+    <a href="{% url 'contactus' %}">Contact</a>
+    <a href="{% url 'cart' %}">Cart</a>
+    <a href="{% url 'signin' %}" id="mobile-nav-signin">Sign In</a>
+    <a href="{% url 'login' %}" id="mobile-nav-login">Log In</a>
+  </div>
+
+  <main class="container center" style="padding-top:18px;">
+    <div class="thank-you-heading">
+      <i class="fas fa-circle-check"></i>
+      <span>Thank you for your order!</span>
+    </div>
+    <p style="text-align: center">We received your order and will contact you soon about delivery details.</p>
+
+    <!-- Order Details -->
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <p><strong>Order ID:</strong> {{ order.id }}</p>
+      <p><strong>Name:</strong> {{ order.full_name }}</p>
+      <p><strong>Email:</strong> {{ order.email }}</p>
+      <p><strong>Contact:</strong> {{ order.contact }}</p>
+      <p><strong>Address:</strong> {{ order.address }}</p>
+      <p><strong>Payment Method:</strong> <span class="badge">{{ order.payment_method }}</span></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <td style="display:flex; align-items:center;">
+
+            </td>
+            <td class="text-center">{{ item.quantity }}</td>
+            <td class="text-right">Rs. {{ item.price_at_purchase }}</td>
+            <td class="text-right">Rs. {{ item.quantity|multiply:item.price_at_purchase }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">Rs. {{ order.total_amount }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div style="text-align: center; margin-top: 12px;">
+        <a href="{% url 'home' %}" class="btn">Continue Shopping</a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <h3 class="footer-title">Smile Cleaning Products</h3>
+      <ul class="footer-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'aboutus' %}">About Us</a></li>
+        <li><a href="{% url 'contactus' %}">Contact</a></li>
+        <li><a href="{% url 'product-list' %}">Products</a></li>
+      </ul>
+      <div class="footer-icons">
+        <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+      <p class="footer-copy">© 2025 Smile Cleaning Products — All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    window.USER_LOGGED_IN = {{ request.user.is_authenticated|yesno:"true,false" }};
+  </script>
+  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+  // Only run if password reset was successful
+  if ({{ password_reset_done|yesno:"true,false" }}) {
+    // Replace current state to remove reset URL
+    window.history.replaceState({}, document.title, "{% url 'home' %}");
+
+    // Redirect if user tries to go back or the page is loaded from bfcache
+    window.onpageshow = function(event) {
+      if (event.persisted || window.performance.navigation.type === 2) {
+        window.location.href = "{% url 'home' %}";
+      }
+    };
+
+    window.onpopstate = function() {
+      window.location.href = "{% url 'home' %}";
+    };
+  }
+</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      showUser(); // display username and handle login/logout
+    });
+  </script>
+</body>
+</html>

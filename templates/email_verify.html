@@ -1,0 +1,17 @@
+<!-- sends mail -->
+<h2>Hello {{ user.first_name }},</h2>
+
+<p>Thanks for signing up at <strong>Smile Cleaning Products</strong>.</p>
+
+<p>Please verify your email by clicking the button below:</p>
+
+<p>
+  <a href="{{ verify_url }}"
+     style="padding:12px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:6px;">
+    Verify My Email
+  </a>
+</p>
+
+<p>This link will expire automatically.</p>
+
+<p>If you didn’t create this account, you can ignore this email.</p>

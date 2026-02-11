@@ -1,0 +1,47 @@
+<!-- sends mail -->
+{% load static %}
+{% load math_filters %}
+<div style="font-family: Arial, sans-serif; max-width:600px; margin:auto; background:#fcfcf9; padding:20px; border-radius:12px; border:1px solid #e2e2e2;">
+    <div style="text-align:center; color:#2a7f4f; font-size:1.5rem; margin-bottom:10px;">
+        <i class="fas fa-circle-check" style="font-size:2rem;"></i> New Order Received
+    </div>
+    <p style="text-align:center;"> received a new order.</p>
+
+    <h3>Order Summary</h3>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Name:</strong> {{ order.full_name }}</p>
+    <p><strong>Email:</strong> {{ order.email }}</p>
+    <p><strong>Contact:</strong> {{ order.contact }}</p>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+
+    <table style="width:100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="background:#e6f2ea; text-align:left;">
+                <th style="padding:10px; border-bottom:1px solid #ccc;">Product</th>
+                <th style="padding:10px; border-bottom:1px solid #ccc; text-align:center;">Quantity</th>
+                <th style="padding:10px; border-bottom:1px solid #ccc; text-align:right;">Price</th>
+                <th style="padding:10px; border-bottom:1px solid #ccc; text-align:right;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:10px;">{{ item.product.name }}</td>
+                <td style="padding:10px; text-align:center;">{{ item.quantity }}</td>
+                <td style="padding:10px; text-align:right;">Rs. {{ item.price_at_purchase }}</td>
+                <td style="padding:10px; text-align:right;">Rs. {{ item.quantity|multiply:item.price_at_purchase }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align:right; padding:10px;"><strong>Total:</strong></td>
+                <td style="text-align:right; padding:10px;"><strong>Rs. {{ order.total_amount }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Include fontawesome in email -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
