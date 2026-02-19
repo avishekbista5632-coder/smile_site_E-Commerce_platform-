@@ -188,18 +188,18 @@
             <th class="text-right">Subtotal</th>
           </tr>
         </thead>
-        <tbody>
-          {% for item in order.items.all %}
-          <tr>
-            <td style="display:flex; align-items:center;">
-
-            </td>
-            <td class="text-center">{{ item.quantity }}</td>
-            <td class="text-right">Rs. {{ item.price_at_purchase }}</td>
-            <td class="text-right">Rs. {{ item.quantity|multiply:item.price_at_purchase }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
+<tbody>
+  {% for item in order.items.all %}
+  <tr>
+    <td>{{ item.product.name }}</td>
+    <td class="text-center">{{ item.quantity }}</td>
+    <td class="text-right">Rs. {{ item.price_at_purchase }}</td>
+    <td class="text-right">
+      Rs. {{ item.quantity|multiply:item.price_at_purchase }}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
         <tfoot>
           <tr>
             <td colspan="3" class="text-right">Total:</td>
